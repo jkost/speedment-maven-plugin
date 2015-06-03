@@ -22,12 +22,12 @@
     
     <groupId>com.speedment.maven</groupId>
     <artifactId>speedment-maven-plugin</artifactId>
-    <version>2.0.0-rc1-SNAPSHOT</version>
+    <version>2.0.6-rc1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     
     <name>Speedment Maven Plugin</name>
     <description>
-        A neat plugin for lauching the Speedment GUI as a maven target.
+        A neat plugin for using Speedment as a maven target.
     </description>
     
     <properties>
@@ -70,7 +70,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.4</version>
                 <configuration>
-                    <goalPrefix>configurator</goalPrefix>
+                    <goalPrefix>speedment</goalPrefix>
                 </configuration>
                 <executions>
                     <execution>
@@ -91,7 +91,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>

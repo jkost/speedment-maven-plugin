@@ -33,36 +33,12 @@ import org.apache.maven.plugins.annotations.Parameter;
  *
  * @author Emil Forslund
  */
-@Mojo(name = "speedment", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "gui", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GUIMojo extends AbstractMojo {
-
-    @Parameter
-    private String groovyFile;
-
-    @Parameter(defaultValue = "true")
-    private boolean showGUI;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-
-        getLog().info("Starting Speedment");
-
-        if (showGUI) {
-            getLog().info("Running Speedment GUI");
-            launch(MainApp.class);
-        } else {
-            if (groovyFile == null) {
-                getLog().error("If you want to start Speedment without GUI, you must configure a .groovy file using the <groovyFile> tag.");
-            } else {
-                getLog().info("Creating from groovy file: '" + groovyFile + "'.");
-
-                try {
-                    final Project p = GroovyParser.projectFromGroovy(groovyFile);
-                    new MainGenerator().accept(p);
-                } catch (IOException ex) {
-                    getLog().error("IOException casted when parsing Groovy-file.");
-                }
-            }
-        }
+        getLog().info("Running Speedment GUI");
+        launch(MainApp.class);
     }
 }
