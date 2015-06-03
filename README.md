@@ -4,7 +4,7 @@ This small plugin makes it possible to run Speedment as a Maven goal in your IDE
 <plugin>
     <artifactId>speedment-maven-plugin</artifactId>
     <groupId>com.speedment</groupId>
-    <version>2.0.0-rc1-SNAPSHOT</version>
+    <version>${speedment.version}</version>
 </plugin>
 ```
 
