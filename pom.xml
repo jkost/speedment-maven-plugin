@@ -52,6 +52,7 @@
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
                         <exclude>src/main/java/com/company/speedment/orm/test/**</exclude>
+						<exclude>nb-configuration.xml</exclude>
                         <exclude>**.properties</exclude>
                         <exclude>src/main/java/com/company/speedment/orm/examples/**</exclude>
                     </excludes>
