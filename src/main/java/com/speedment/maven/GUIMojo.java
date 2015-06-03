@@ -25,29 +25,28 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import static javafx.application.Application.launch;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  *
  * @author Emil Forslund
- * @goal generate
  */
+@Mojo(name = "speedment", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GUIMojo extends AbstractMojo {
 
-    /**
-     * @parameter expression="${generate.groovyFile}"
-     */
+    @Parameter
     private String groovyFile;
-    
-    /**
-     * @parameter default-value=true
-     */
+
+    @Parameter(defaultValue = "true")
     private boolean showGUI;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
         getLog().info("Starting Speedment");
-        
+
         if (showGUI) {
             getLog().info("Running Speedment GUI");
             launch(MainApp.class);
@@ -56,7 +55,7 @@ public class GUIMojo extends AbstractMojo {
                 getLog().error("If you want to start Speedment without GUI, you must configure a .groovy file using the <groovyFile> tag.");
             } else {
                 getLog().info("Creating from groovy file: '" + groovyFile + "'.");
-            
+
                 try {
                     final Project p = GroovyParser.projectFromGroovy(groovyFile);
                     new MainGenerator().accept(p);
