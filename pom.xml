@@ -52,7 +52,7 @@
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
                         <exclude>src/main/java/com/company/speedment/orm/test/**</exclude>
-						<exclude>nb-configuration.xml</exclude>
+                        <exclude>nb-configuration.xml</exclude>
                         <exclude>**.properties</exclude>
                         <exclude>src/main/java/com/company/speedment/orm/examples/**</exclude>
                     </excludes>
@@ -67,15 +67,27 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.4</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
+                    <goalPrefix>configurator</goalPrefix>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                    <execution>
+                        <id>help-descriptor</id>
+                        <goals>
+                            <goal>helpmojo</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
