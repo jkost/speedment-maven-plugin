@@ -19,13 +19,11 @@ package com.speedment.maven;
 import com.speedment.core.code.model.java.MainGenerator;
 import com.speedment.core.config.model.Project;
 import com.speedment.core.config.model.impl.utils.GroovyParser;
-import com.speedment.gui.MainApp;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import static javafx.application.Application.launch;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -37,7 +35,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GenerateMojo extends AbstractMojo {
 
-    @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
+    @Parameter(defaultValue = "groovy/speedment.groovy")
     private File groovyFile;
 
     @Override
