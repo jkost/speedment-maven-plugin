@@ -25,3 +25,5 @@ Speedment is available under the Apache 2 License.
 Copyright (c) 2008-2015, Speedment, Inc. All Rights Reserved.
 
 Visit [www.speedment.com](http://www.speedment.com/) for more info.
+
+[![Analytics](https://ga-beacon.appspot.com/UA-64937309-1/speedment-maven-plugin/main)](https://github.com/igrigorik/ga-beacon)
