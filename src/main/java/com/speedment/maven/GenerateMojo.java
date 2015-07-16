@@ -35,7 +35,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GenerateMojo extends AbstractMojo {
 
-    @Parameter(defaultValue = "groovy/speedment.groovy")
+    @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
     private File groovyFile;
 
     @Override
