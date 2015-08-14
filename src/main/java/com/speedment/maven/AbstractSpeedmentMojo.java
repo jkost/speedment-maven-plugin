@@ -16,38 +16,28 @@
  */
 package com.speedment.maven;
 
+import com.speedment.core.platform.Platform;
 import com.speedment.core.platform.component.Component;
-import com.speedment.gui.MainApp;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import static javafx.application.Application.launch;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  *
  * @author Emil Forslund
  */
-@Mojo(name = "gui", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GUIMojo extends AbstractSpeedmentMojo {
+abstract class AbstractSpeedmentMojo extends AbstractMojo {
     
-    @Parameter
-    private Component[] components;
-
+    protected abstract Component[] components();
+    protected abstract String launchMessage();
+    
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        super.execute();
-        launch(MainApp.class);
-    }
-
-    @Override
-    protected Component[] components() {
-        return components;
-    }
-
-    @Override
-    protected String launchMessage() {
-        return "Running Speedment GUI";
+        getLog().info(launchMessage());
+        
+        for (final Component comp : components()) {
+            getLog().info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
+            Platform.get().add(comp);
+        }
     }
 }

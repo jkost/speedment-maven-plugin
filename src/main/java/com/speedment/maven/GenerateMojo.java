@@ -19,9 +19,9 @@ package com.speedment.maven;
 import com.speedment.core.code.model.java.MainGenerator;
 import com.speedment.core.config.model.Project;
 import com.speedment.core.config.model.impl.utils.GroovyParser;
+import com.speedment.core.platform.component.Component;
 import java.io.File;
 import java.io.IOException;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -33,15 +33,18 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author Emil Forslund
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GenerateMojo extends AbstractMojo {
+public class GenerateMojo extends AbstractSpeedmentMojo {
 
+    @Parameter
+    private Component[] components;
+    
     @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
     private File groovyFile;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Starting Speedment");
-
+        super.execute();
+        
         if (groovyFile == null) {
             final String err = "If you want to use speedment:generate, you must configure a .groovy file using the <groovyFile> tag.";
             getLog().error(err);
@@ -66,5 +69,15 @@ public class GenerateMojo extends AbstractMojo {
                 throw new MojoExecutionException(err, ex);
             }
         }
+    }
+
+    @Override
+    protected Component[] components() {
+        return components;
+    }
+
+    @Override
+    protected String launchMessage() {
+        return "Starting Speedment";
     }
 }
