@@ -61,7 +61,7 @@ public class GenerateMojo extends AbstractMojo {
                 final Project p = GroovyParser.projectFromGroovy(groovyFile.toPath());
                 new MainGenerator().accept(p);
             } catch (IOException ex) {
-                final String err = "IOException casted when parsing Groovy-file.";
+                final String err = "IOException thrown when parsing Groovy-file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
