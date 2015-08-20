@@ -35,9 +35,13 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info(launchMessage());
         
-        for (final Component comp : components()) {
-            getLog().info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
-            Platform.get().add(comp);
+        if (components() != null) {
+            for (final Component comp : components()) {
+                getLog().info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
+                Platform.get().add(comp);
+            }
+        } else {
+            getLog().info("Component container is not defined.");
         }
     }
 }
