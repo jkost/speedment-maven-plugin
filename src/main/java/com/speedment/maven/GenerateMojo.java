@@ -16,9 +16,9 @@
  */
 package com.speedment.maven;
 
-import com.speedment.core.code.model.java.MainGenerator;
-import com.speedment.core.config.model.Project;
-import com.speedment.core.config.model.impl.utils.GroovyParser;
+import com.speedment.core.code.MainGenerator;
+import com.speedment.api.config.Project;
+import com.speedment.core.config.utils.GroovyParser;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
