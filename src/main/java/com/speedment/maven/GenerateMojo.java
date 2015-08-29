@@ -16,12 +16,12 @@
  */
 package com.speedment.maven;
 
-import com.speedment.core.code.MainGenerator;
 import com.speedment.api.config.Project;
+import com.speedment.core.code.MainGenerator;
 import com.speedment.core.config.utils.GroovyParser;
+import com.speedment.core.platform.component.Component;
 import java.io.File;
 import java.io.IOException;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -33,14 +33,17 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author Emil Forslund
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GenerateMojo extends AbstractMojo {
+public class GenerateMojo extends AbstractSpeedmentMojo {
+
+    @Parameter
+    private Component[] components;
 
     @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
     private File groovyFile;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Starting Speedment");
+        super.execute();
 
         if (groovyFile == null) {
             final String err = "If you want to use speedment:generate, you must configure a .groovy file using the <groovyFile> tag.";
@@ -58,13 +61,23 @@ public class GenerateMojo extends AbstractMojo {
             getLog().info("Creating from groovy file: '" + groovyFile.getAbsolutePath() + "'.");
 
             try {
-                final Project p = GroovyParser.projectFromGroovy(groovyFile.toPath());
-                new MainGenerator().accept(p);
+                final Project p = GroovyParser.projectFromGroovy(getSpeedment(), groovyFile.toPath());
+                new MainGenerator(getSpeedment()).accept(p);
             } catch (IOException ex) {
-                final String err = "IOException casted when parsing Groovy-file.";
+                final String err = "IOException thrown when parsing Groovy-file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
         }
+    }
+
+    @Override
+    protected Component[] components() {
+        return components;
+    }
+
+    @Override
+    protected String launchMessage() {
+        return "Starting Speedment";
     }
 }

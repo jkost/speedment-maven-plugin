@@ -16,12 +16,9 @@
  */
 package com.speedment.maven;
 
-import com.speedment.core.code.MainGenerator;
-import com.speedment.api.config.Project;
-import com.speedment.core.config.utils.GroovyParser;
+
+import com.speedment.core.platform.component.Component;
 import com.speedment.gui.MainApp;
-import java.io.IOException;
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import static javafx.application.Application.launch;
@@ -34,11 +31,24 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author Emil Forslund
  */
 @Mojo(name = "gui", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GUIMojo extends AbstractMojo {
+public class GUIMojo extends AbstractSpeedmentMojo {
+    
+    @Parameter
+    private Component[] components;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Running Speedment GUI");
+        super.execute();
         launch(MainApp.class);
+    }
+
+    @Override
+    protected Component[] components() {
+        return components;
+    }
+
+    @Override
+    protected String launchMessage() {
+        return "Running Speedment GUI";
     }
 }
