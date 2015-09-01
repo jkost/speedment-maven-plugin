@@ -16,9 +16,9 @@
  */
 package com.speedment.maven;
 
-import com.speedment.api.Speedment;
-import com.speedment.core.platform.SpeedmentImpl;
-import com.speedment.core.platform.component.Component;
+import com.speedment.Speedment;
+import com.speedment.internal.core.platform.SpeedmentFactory;
+import com.speedment.internal.core.platform.component.Component;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -35,7 +35,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     protected abstract String launchMessage();
     
     protected AbstractSpeedmentMojo() {
-        this.speedment = new SpeedmentImpl();
+        this.speedment = SpeedmentFactory.newSpeedmentInstance();
     }
     
     /**

@@ -17,8 +17,8 @@
 package com.speedment.maven;
 
 
-import com.speedment.core.platform.component.Component;
-import com.speedment.gui.MainApp;
+import com.speedment.internal.core.platform.component.Component;
+import com.speedment.internal.gui.MainApp;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import static javafx.application.Application.launch;
