@@ -52,7 +52,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
         if (components() != null) {
             for (final Component comp : components()) {
                 getLog().info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
-                getSpeedment().add(comp);
+                getSpeedment().put(comp);
             }
         } else {
             getLog().info("Component container is not defined.");
