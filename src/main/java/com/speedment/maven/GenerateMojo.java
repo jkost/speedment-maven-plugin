@@ -19,7 +19,7 @@ package com.speedment.maven;
 import com.speedment.config.Project;
 import com.speedment.internal.core.code.MainGenerator;
 import com.speedment.internal.core.config.utils.GroovyParser;
-import com.speedment.internal.core.platform.component.Component;
+import com.speedment.component.Component;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
