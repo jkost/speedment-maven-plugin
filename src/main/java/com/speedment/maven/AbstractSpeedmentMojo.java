@@ -17,8 +17,8 @@
 package com.speedment.maven;
 
 import com.speedment.Speedment;
+import com.speedment.component.Component;
 import com.speedment.internal.core.platform.SpeedmentFactory;
-import com.speedment.internal.core.platform.component.Component;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
