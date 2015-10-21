@@ -19,6 +19,7 @@ package com.speedment.maven;
 
 import com.speedment.component.Component;
 import com.speedment.internal.gui.MainApp;
+import com.speedment.internal.gui.controller.SceneController;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import static javafx.application.Application.launch;
@@ -39,7 +40,12 @@ public class GUIMojo extends AbstractSpeedmentMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         super.execute();
-        launch(MainApp.class);
+
+        if (SceneController.DEFAULT_GROOVY_LOCATION.exists()) {
+            launch(MainApp.class, SceneController.DEFAULT_GROOVY_LOCATION.getAbsolutePath());
+        } else {
+            launch(MainApp.class);
+        }
     }
 
     @Override
