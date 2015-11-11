@@ -16,7 +16,8 @@
  */
 package com.speedment.maven;
 
-import com.speedment.component.Component;
+import com.speedment.Speedment;
+import com.speedment.component.ComponentBuilder;
 import com.speedment.config.Project;
 import com.speedment.internal.core.code.MainGenerator;
 import com.speedment.internal.core.config.utils.GroovyParser;
@@ -37,15 +38,13 @@ import org.apache.maven.plugins.annotations.Parameter;
 public class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
-    private Component[] components;
+    private ComponentBuilder[] components;
 
     @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
     private File groovyFile;
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        super.execute();
-
+    public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
         if (groovyFile == null) {
             final String err = "If you want to use speedment:generate, you must configure a .groovy file using the <groovyFile> tag.";
             getLog().error(err);
@@ -62,8 +61,8 @@ public class GenerateMojo extends AbstractSpeedmentMojo {
             getLog().info("Creating from groovy file: '" + groovyFile.getAbsolutePath() + "'.");
 
             try {
-                final Project p = GroovyParser.projectFromGroovy(getSpeedment(), groovyFile.toPath());
-                new MainGenerator(getSpeedment()).accept(p);
+                final Project p = GroovyParser.projectFromGroovy(speedment, groovyFile.toPath());
+                new MainGenerator(speedment).accept(p);
             } catch (IOException ex) {
                 final String err = "IOException thrown when parsing Groovy-file.";
                 getLog().error(err);
@@ -73,7 +72,7 @@ public class GenerateMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected Component[] components() {
+    protected ComponentBuilder[] components() {
         return components;
     }
 

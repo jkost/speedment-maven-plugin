@@ -17,8 +17,7 @@
 package com.speedment.maven;
 
 import com.speedment.Speedment;
-import com.speedment.component.Component;
-import com.speedment.internal.core.platform.SpeedmentFactory;
+import com.speedment.component.ComponentBuilder;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -29,33 +28,19 @@ import org.apache.maven.plugin.MojoFailureException;
  */
 abstract class AbstractSpeedmentMojo extends AbstractMojo {
     
-    private final Speedment speedment;
-    
-    protected abstract Component[] components();
+    private final SpeedmentInitializer lifecycle;
+
+    protected abstract ComponentBuilder[] components();
     protected abstract String launchMessage();
+    protected abstract void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException;
     
     protected AbstractSpeedmentMojo() {
-        this.speedment = SpeedmentFactory.newSpeedmentInstance();
-    }
-    
-    /**
-     * @return the speedment
-     */
-    protected Speedment getSpeedment() {
-        return speedment;
+        lifecycle = new SpeedmentInitializer(getLog(), this::components);
     }
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info(launchMessage());
-        
-        if (components() != null) {
-            for (final Component comp : components()) {
-                getLog().info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
-                getSpeedment().put(comp);
-            }
-        } else {
-            getLog().info("Component container is not defined.");
-        }
+        execute(lifecycle.build());
     }
 }
