@@ -33,13 +33,16 @@ import static javafx.application.Application.launch;
  * @author Emil Forslund
  */
 @Mojo(name = "gui", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GUIMojo extends AbstractSpeedmentMojo {
+public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
     private ComponentBuilder[] components;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
+        
+        MainApp.setSpeedment(speedment);
+        
         if (SceneController.DEFAULT_GROOVY_LOCATION.exists()) {
             launch(MainApp.class, SceneController.DEFAULT_GROOVY_LOCATION.getAbsolutePath());
         } else {

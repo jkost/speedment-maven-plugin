@@ -35,7 +35,7 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author Emil Forslund
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GenerateMojo extends AbstractSpeedmentMojo {
+public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
     private ComponentBuilder[] components;

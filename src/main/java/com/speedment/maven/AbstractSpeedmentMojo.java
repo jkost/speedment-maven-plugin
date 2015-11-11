@@ -39,7 +39,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     }
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public final void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info(launchMessage());
         execute(lifecycle.build());
     }

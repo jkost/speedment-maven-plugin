@@ -55,6 +55,7 @@ public class SpeedmentInitializer {
         }
         
         speedment.components().forEach(Component::resolve);
+        speedment.components().forEach(Component::start);
 
         return speedment;
     }
