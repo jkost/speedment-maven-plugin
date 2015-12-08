@@ -28,7 +28,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Emil
  */
-public class SpeedmentInitializer {
+final class SpeedmentInitializer {
     
     private final Log log;
     private final Supplier<ComponentBuilder[]> componentBuilders;

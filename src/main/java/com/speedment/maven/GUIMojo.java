@@ -19,8 +19,8 @@ package com.speedment.maven;
 
 import com.speedment.Speedment;
 import com.speedment.component.ComponentBuilder;
-import com.speedment.internal.gui.MainApp;
-import com.speedment.internal.gui.controller.SceneController;
+import com.speedment.internal.ui.MainApp;
+import com.speedment.internal.ui.UISession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -43,8 +43,8 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
         
         MainApp.setSpeedment(speedment);
         
-        if (SceneController.DEFAULT_GROOVY_LOCATION.exists()) {
-            launch(MainApp.class, SceneController.DEFAULT_GROOVY_LOCATION.getAbsolutePath());
+        if (UISession.DEFAULT_GROOVY_LOCATION.exists()) {
+            launch(MainApp.class, UISession.DEFAULT_GROOVY_LOCATION.getAbsolutePath());
         } else {
             launch(MainApp.class);
         }
