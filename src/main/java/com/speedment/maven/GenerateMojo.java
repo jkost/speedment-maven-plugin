@@ -39,7 +39,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
-    private ComponentBuilder[] components;
+    private ComponentBuilder<?>[] components;
 
     @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
     private File groovyFile;
@@ -65,7 +65,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
     }
     

@@ -37,7 +37,7 @@ import static javafx.application.Application.launch;
 public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
-    private ComponentBuilder[] components;
+    private ComponentBuilder<?>[] components;
     
     @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
     private File groovyFile;
@@ -54,7 +54,7 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
     }
     

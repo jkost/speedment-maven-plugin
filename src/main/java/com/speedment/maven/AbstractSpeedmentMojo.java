@@ -31,7 +31,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     
     private final SpeedmentInitializer lifecycle;
 
-    protected abstract ComponentBuilder[] components();
+    protected abstract ComponentBuilder<?>[] components();
     protected abstract File groovyLocation();
     protected abstract String launchMessage();
     protected abstract void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException;
