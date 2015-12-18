@@ -17,40 +17,50 @@
 package com.speedment.maven;
 
 
-import com.speedment.component.Component;
-import com.speedment.internal.gui.MainApp;
-import com.speedment.internal.gui.controller.SceneController;
+import com.speedment.Speedment;
+import com.speedment.component.ComponentBuilder;
+import com.speedment.internal.ui.MainApp;
+import static com.speedment.internal.ui.UISession.DEFAULT_GROOVY_LOCATION;
+import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import static javafx.application.Application.launch;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import static javafx.application.Application.launch;
 
 /**
  *
  * @author Emil Forslund
  */
 @Mojo(name = "gui", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GUIMojo extends AbstractSpeedmentMojo {
+public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
-    private Component[] components;
+    private ComponentBuilder<?>[] components;
+    
+    @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
+    private File groovyFile;
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        super.execute();
-
-        if (SceneController.DEFAULT_GROOVY_LOCATION.exists()) {
-            launch(MainApp.class, SceneController.DEFAULT_GROOVY_LOCATION.getAbsolutePath());
+    public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
+        MainApp.setSpeedment(speedment);
+        
+        if (hasGroovyFile()) {
+            launch(MainApp.class, groovyFile.getAbsolutePath());
         } else {
             launch(MainApp.class);
         }
     }
 
     @Override
-    protected Component[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
+    }
+    
+    @Override
+    protected File groovyLocation() {
+        return groovyFile;
     }
 
     @Override

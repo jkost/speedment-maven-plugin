@@ -16,10 +16,12 @@
  */
 package com.speedment.maven;
 
-import com.speedment.component.Component;
+import com.speedment.Speedment;
+import com.speedment.component.ComponentBuilder;
 import com.speedment.config.Project;
 import com.speedment.internal.core.code.MainGenerator;
 import com.speedment.internal.core.config.utils.GroovyParser;
+import static com.speedment.internal.ui.UISession.DEFAULT_GROOVY_LOCATION;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -34,47 +36,42 @@ import org.apache.maven.plugins.annotations.Parameter;
  * @author Emil Forslund
  */
 @Mojo(name = "generate", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-public class GenerateMojo extends AbstractSpeedmentMojo {
+public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
-    private Component[] components;
+    private ComponentBuilder<?>[] components;
 
-    @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
+    @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
     private File groovyFile;
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
-        super.execute();
-
-        if (groovyFile == null) {
-            final String err = "If you want to use speedment:generate, you must configure a .groovy file using the <groovyFile> tag.";
-            getLog().error(err);
-            throw new MojoExecutionException(err);
-        } else if (!groovyFile.exists()) {
-            final String err = "The specified groovy-file '" + groovyFile.getAbsolutePath() + "' does not exist.";
-            getLog().error(err);
-            throw new MojoExecutionException(err);
-        } else if (!groovyFile.canRead()) {
-            final String err = "The specified groovy-file '" + groovyFile.getAbsolutePath() + "' is not readable.";
-            getLog().error(err);
-            throw new MojoExecutionException(err);
-        } else {
-            getLog().info("Creating from groovy file: '" + groovyFile.getAbsolutePath() + "'.");
-
+    public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
+        getLog().info("Creating from groovy file: '" + groovyFile.getAbsolutePath() + "'.");
+        
+        if (hasGroovyFile()) {
             try {
-                final Project p = GroovyParser.projectFromGroovy(getSpeedment(), groovyFile.toPath());
-                new MainGenerator(getSpeedment()).accept(p);
+                final Project p = GroovyParser.projectFromGroovy(speedment, groovyFile.toPath());
+                new MainGenerator(speedment).accept(p);
             } catch (IOException ex) {
                 final String err = "IOException thrown when parsing Groovy-file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
+        } else {
+            final String err = "To run speedment:generate a valid .groovy-file need to be specified.";
+            getLog().error(err);
+            throw new MojoExecutionException(err);
         }
     }
 
     @Override
-    protected Component[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
+    }
+    
+    @Override
+    protected File groovyLocation() {
+        return groovyFile;
     }
 
     @Override
