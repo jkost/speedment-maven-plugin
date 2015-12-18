@@ -21,6 +21,7 @@ import com.speedment.component.ComponentBuilder;
 import com.speedment.config.Project;
 import com.speedment.internal.core.code.MainGenerator;
 import com.speedment.internal.core.config.utils.GroovyParser;
+import static com.speedment.internal.ui.UISession.DEFAULT_GROOVY_LOCATION;
 import java.io.File;
 import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -40,7 +41,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     @Parameter
     private ComponentBuilder[] components;
 
-    @Parameter(defaultValue = "src/main/groovy/speedment.groovy")
+    @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
     private File groovyFile;
 
     @Override
