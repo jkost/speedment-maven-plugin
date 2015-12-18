@@ -18,6 +18,7 @@ package com.speedment.maven;
 
 import com.speedment.Speedment;
 import com.speedment.component.ComponentBuilder;
+import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -31,6 +32,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     private final SpeedmentInitializer lifecycle;
 
     protected abstract ComponentBuilder[] components();
+    protected abstract File groovyLocation();
     protected abstract String launchMessage();
     protected abstract void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException;
     
@@ -40,7 +42,23 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
 
     @Override
     public final void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info(launchMessage());
+        getLog().info(launchMessage());    
         execute(lifecycle.build());
+    }
+    
+    protected final boolean hasGroovyFile() {
+        if (groovyLocation() == null) {
+            final String err = "Specified .groovy-file is null.";
+            getLog().error(err);
+            return false;
+        } else if (!groovyLocation().exists()) {
+            final String err = "The specified groovy-file '" + groovyLocation().getAbsolutePath() + "' does not exist.";
+            getLog().error(err);
+            return false;
+        } else if (!groovyLocation().canRead()) {
+            final String err = "The specified groovy-file '" + groovyLocation().getAbsolutePath() + "' is not readable.";
+            getLog().error(err);
+            return false;
+        } else return true;
     }
 }
