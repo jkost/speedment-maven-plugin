@@ -18,17 +18,17 @@ package com.speedment.maven;
 
 import com.speedment.Speedment;
 import com.speedment.component.ComponentBuilder;
-import com.speedment.config.Project;
+import com.speedment.config.db.Project;
+import com.speedment.exception.SpeedmentException;
 import com.speedment.internal.core.code.MainGenerator;
-import com.speedment.internal.core.config.utils.GroovyParser;
-import static com.speedment.internal.ui.UISession.DEFAULT_GROOVY_LOCATION;
+import com.speedment.internal.util.document.DocumentTranscoder;
 import java.io.File;
-import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 
 
 /**
@@ -41,19 +41,19 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     @Parameter
     private ComponentBuilder[] components;
 
-    @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
-    private File groovyFile;
+    @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
+    private File jsonFile;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
-        getLog().info("Creating from groovy file: '" + groovyFile.getAbsolutePath() + "'.");
+        getLog().info("Creating from groovy file: '" + jsonFile.getAbsolutePath() + "'.");
         
-        if (hasGroovyFile()) {
+        if (hasConfigFile()) {
             try {
-                final Project p = GroovyParser.projectFromGroovy(speedment, groovyFile.toPath());
+                final Project p = DocumentTranscoder.load(jsonFile.toPath());
                 new MainGenerator(speedment).accept(p);
-            } catch (IOException ex) {
-                final String err = "IOException thrown when parsing Groovy-file.";
+            } catch (SpeedmentException ex) {
+                final String err = "Error parsing JSON config file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
@@ -70,8 +70,8 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     }
     
     @Override
-    protected File groovyLocation() {
-        return groovyFile;
+    protected File configLocation() {
+        return jsonFile;
     }
 
     @Override

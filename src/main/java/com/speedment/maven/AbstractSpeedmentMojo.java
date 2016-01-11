@@ -32,7 +32,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     private final SpeedmentInitializer lifecycle;
 
     protected abstract ComponentBuilder[] components();
-    protected abstract File groovyLocation();
+    protected abstract File configLocation();
     protected abstract String launchMessage();
     protected abstract void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException;
     
@@ -46,17 +46,17 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
         execute(lifecycle.build());
     }
     
-    protected final boolean hasGroovyFile() {
-        if (groovyLocation() == null) {
-            final String err = "Specified .groovy-file is null.";
+    protected final boolean hasConfigFile() {
+        if (configLocation() == null) {
+            final String err = "Specified .json-file is null.";
             getLog().error(err);
             return false;
-        } else if (!groovyLocation().exists()) {
-            final String err = "The specified groovy-file '" + groovyLocation().getAbsolutePath() + "' does not exist.";
+        } else if (!configLocation().exists()) {
+            final String err = "The specified .json-file '" + configLocation().getAbsolutePath() + "' does not exist.";
             getLog().error(err);
             return false;
-        } else if (!groovyLocation().canRead()) {
-            final String err = "The specified groovy-file '" + groovyLocation().getAbsolutePath() + "' is not readable.";
+        } else if (!configLocation().canRead()) {
+            final String err = "The specified .json-file '" + configLocation().getAbsolutePath() + "' is not readable.";
             getLog().error(err);
             return false;
         } else return true;
