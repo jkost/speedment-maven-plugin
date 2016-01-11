@@ -28,7 +28,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 import static javafx.application.Application.launch;
-import static javafx.application.Application.launch;
 
 /**
  *
@@ -38,7 +37,7 @@ import static javafx.application.Application.launch;
 public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
-    private ComponentBuilder[] components;
+    private ComponentBuilder<?>[] components;
     
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
     private File jsonFile;
@@ -55,7 +54,7 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
     }
     

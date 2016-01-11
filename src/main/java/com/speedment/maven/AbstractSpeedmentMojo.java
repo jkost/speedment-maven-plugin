@@ -31,13 +31,13 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     
     private final SpeedmentInitializer lifecycle;
 
-    protected abstract ComponentBuilder[] components();
     protected abstract File configLocation();
+    protected abstract ComponentBuilder<?>[] components();
     protected abstract String launchMessage();
     protected abstract void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException;
     
     protected AbstractSpeedmentMojo() {
-        lifecycle = new SpeedmentInitializer(getLog(), this::components);
+        lifecycle = new SpeedmentInitializer(super.getLog(), this::components);
     }
 
     @Override

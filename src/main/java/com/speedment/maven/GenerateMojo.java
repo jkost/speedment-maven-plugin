@@ -39,7 +39,7 @@ import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
-    private ComponentBuilder[] components;
+    private ComponentBuilder<?>[] components;
 
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
     private File jsonFile;
@@ -65,7 +65,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder[] components() {
+    protected ComponentBuilder<?>[] components() {
         return components;
     }
     

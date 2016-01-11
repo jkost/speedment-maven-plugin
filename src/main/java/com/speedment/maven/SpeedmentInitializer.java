@@ -31,16 +31,16 @@ import static java.util.Objects.requireNonNull;
 final class SpeedmentInitializer {
     
     private final Log log;
-    private final Supplier<ComponentBuilder[]> componentBuilders;
+    private final Supplier<ComponentBuilder<?>[]> componentBuilders;
     
-    public SpeedmentInitializer(Log log, Supplier<ComponentBuilder[]> componentBuilders) {
+    public SpeedmentInitializer(Log log, Supplier<ComponentBuilder<?>[]> componentBuilders) {
         this.log               = requireNonNull(log);
         this.componentBuilders = requireNonNull(componentBuilders);
     }
     
     public Speedment build() {
         final Speedment speedment = SpeedmentFactory.newSpeedmentInstance();
-        final ComponentBuilder[] builders = componentBuilders.get();
+        final ComponentBuilder<?>[] builders = componentBuilders.get();
         
         if (builders != null) {
             for (final ComponentBuilder<?> builder : builders) {
