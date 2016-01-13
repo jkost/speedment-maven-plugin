@@ -20,7 +20,7 @@ import com.speedment.Speedment;
 import com.speedment.component.ComponentBuilder;
 import com.speedment.config.db.Project;
 import com.speedment.exception.SpeedmentException;
-import com.speedment.internal.core.code.MainGenerator;
+import com.speedment.internal.core.code.TranslatorManager;
 import com.speedment.internal.util.document.DocumentTranscoder;
 import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -51,7 +51,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
         if (hasConfigFile()) {
             try {
                 final Project p = DocumentTranscoder.load(configFile.toPath());
-                new MainGenerator(speedment).accept(p);
+                new TranslatorManager(speedment).accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing JSON config file.";
                 getLog().error(err);
