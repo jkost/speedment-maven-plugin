@@ -42,15 +42,15 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     private ComponentBuilder<?>[] components;
 
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
-    private File jsonFile;
+    private File configFile;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
-        getLog().info("Creating from groovy file: '" + jsonFile.getAbsolutePath() + "'.");
+        getLog().info("Creating from groovy file: '" + configFile.getAbsolutePath() + "'.");
         
         if (hasConfigFile()) {
             try {
-                final Project p = DocumentTranscoder.load(jsonFile.toPath());
+                final Project p = DocumentTranscoder.load(configFile.toPath());
                 new MainGenerator(speedment).accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing JSON config file.";
@@ -71,7 +71,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     
     @Override
     protected File configLocation() {
-        return jsonFile;
+        return configFile;
     }
 
     @Override

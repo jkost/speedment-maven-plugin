@@ -40,14 +40,14 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
     private ComponentBuilder<?>[] components;
     
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
-    private File jsonFile;
+    private File configFile;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
         MainApp.setSpeedment(speedment);
         
         if (hasConfigFile()) {
-            launch(MainApp.class, jsonFile.getAbsolutePath());
+            launch(MainApp.class, configFile.getAbsolutePath());
         } else {
             launch(MainApp.class);
         }
@@ -60,7 +60,7 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Override
     protected File configLocation() {
-        return jsonFile;
+        return configFile;
     }
 
     @Override
