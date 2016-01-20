@@ -58,7 +58,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
                 throw new MojoExecutionException(err, ex);
             }
         } else {
-            final String err = "To run speedment:generate a valid .groovy-file need to be specified.";
+            final String err = "To run speedment:generate a valid configFile needs to be specified.";
             getLog().error(err);
             throw new MojoExecutionException(err);
         }
