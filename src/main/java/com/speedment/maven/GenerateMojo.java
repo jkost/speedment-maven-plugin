@@ -46,14 +46,14 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
-        getLog().info("Creating from groovy file: '" + configFile.getAbsolutePath() + "'.");
+        getLog().info("Creating from configFile file: '" + configFile.getAbsolutePath() + "'.");
         
         if (hasConfigFile()) {
             try {
                 final Project p = DocumentTranscoder.load(configFile.toPath());
                 new TranslatorManager(speedment).accept(p);
             } catch (SpeedmentException ex) {
-                final String err = "Error parsing JSON config file.";
+                final String err = "Error parsing configFile file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
