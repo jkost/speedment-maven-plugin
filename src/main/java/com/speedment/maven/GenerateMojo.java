@@ -53,7 +53,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
                 final Project p = DocumentTranscoder.load(configFile.toPath());
                 new TranslatorManager(speedment).accept(p);
             } catch (SpeedmentException ex) {
-                final String err = "Error parsing JSON config file.";
+                final String err = "Error parsing configFile file.";
                 getLog().error(err);
                 throw new MojoExecutionException(err, ex);
             }
