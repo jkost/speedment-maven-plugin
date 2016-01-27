@@ -17,7 +17,6 @@
 package com.speedment.maven;
 
 import com.speedment.Speedment;
-import com.speedment.component.ComponentBuilder;
 import com.speedment.config.db.Project;
 import com.speedment.exception.SpeedmentException;
 import com.speedment.internal.core.code.TranslatorManager;
@@ -29,6 +28,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
+import com.speedment.component.ComponentConstructor;
 
 
 /**
@@ -39,14 +39,14 @@ import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Parameter
-    private ComponentBuilder<?>[] components;
+    private ComponentConstructor<?>[] components;
 
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
     private File configFile;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
-        getLog().info("Creating from groovy file: '" + configFile.getAbsolutePath() + "'.");
+        getLog().info("Creating from JSON file: '" + configFile.getAbsolutePath() + "'.");
         
         if (hasConfigFile()) {
             try {
@@ -65,7 +65,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder<?>[] components() {
+    protected ComponentConstructor<?>[] components() {
         return components;
     }
     

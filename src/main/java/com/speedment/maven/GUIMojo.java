@@ -18,7 +18,6 @@ package com.speedment.maven;
 
 
 import com.speedment.Speedment;
-import com.speedment.component.ComponentBuilder;
 import com.speedment.internal.ui.MainApp;
 import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -27,6 +26,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
+import static javafx.application.Application.launch;
+import com.speedment.component.ComponentConstructor;
 import static javafx.application.Application.launch;
 
 /**
@@ -37,7 +38,7 @@ import static javafx.application.Application.launch;
 public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
-    private ComponentBuilder<?>[] components;
+    private ComponentConstructor<?>[] components;
     
     @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
     private File configFile;
@@ -54,7 +55,7 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
     }
 
     @Override
-    protected ComponentBuilder<?>[] components() {
+    protected ComponentConstructor<?>[] components() {
         return components;
     }
     
