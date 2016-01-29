@@ -18,7 +18,6 @@ package com.speedment.maven;
 
 import com.speedment.Speedment;
 import com.speedment.internal.core.runtime.DefaultSpeedmentApplicationLifecycle;
-import com.speedment.internal.core.runtime.SpeedmentApplicationLifecycle;
 import java.io.File;
 import java.util.function.Supplier;
 import org.apache.maven.plugin.logging.Log;
@@ -42,7 +41,7 @@ final class SpeedmentInitializer {
     }
     
     public Speedment build() {
-        final SpeedmentApplicationLifecycle<?> lifecycle = new DefaultSpeedmentApplicationLifecycle(configFile);
+        final DefaultSpeedmentApplicationLifecycle lifecycle = new DefaultSpeedmentApplicationLifecycle(configFile);
         final ComponentConstructor<?>[] constructors = componentBuilders.get();
         
         if (constructors != null) {

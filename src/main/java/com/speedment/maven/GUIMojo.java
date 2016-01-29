@@ -26,7 +26,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
-import static javafx.application.Application.launch;
 import com.speedment.component.ComponentConstructor;
 import static javafx.application.Application.launch;
 
