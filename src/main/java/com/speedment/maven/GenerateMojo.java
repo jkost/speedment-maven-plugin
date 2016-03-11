@@ -19,7 +19,7 @@ package com.speedment.maven;
 import com.speedment.Speedment;
 import com.speedment.config.db.Project;
 import com.speedment.exception.SpeedmentException;
-import com.speedment.internal.core.code.TranslatorManager;
+import com.speedment.code.TranslatorManager;
 import com.speedment.internal.util.document.DocumentTranscoder;
 import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
