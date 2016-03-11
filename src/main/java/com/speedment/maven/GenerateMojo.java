@@ -19,7 +19,6 @@ package com.speedment.maven;
 import com.speedment.Speedment;
 import com.speedment.config.db.Project;
 import com.speedment.exception.SpeedmentException;
-import com.speedment.code.TranslatorManager;
 import com.speedment.internal.util.document.DocumentTranscoder;
 import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -29,6 +28,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 import com.speedment.component.ComponentConstructor;
+import com.speedment.internal.core.code.TranslatorManagerImpl;
 
 
 /**
@@ -51,7 +51,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
         if (hasConfigFile()) {
             try {
                 final Project p = DocumentTranscoder.load(configFile.toPath());
-                new TranslatorManager(speedment).accept(p);
+                new TranslatorManagerImpl(speedment).accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing configFile file.";
                 getLog().error(err);
