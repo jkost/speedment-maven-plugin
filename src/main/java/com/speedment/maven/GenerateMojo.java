@@ -28,7 +28,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 import com.speedment.component.ComponentConstructor;
-import com.speedment.internal.core.code.TranslatorManagerImpl;
 
 
 /**
@@ -51,7 +50,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
         if (hasConfigFile()) {
             try {
                 final Project p = DocumentTranscoder.load(configFile.toPath());
-                new TranslatorManagerImpl(speedment).accept(p);
+                speedment.getCodeGenerationComponent().getTranslatorManager().accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing configFile file.";
                 getLog().error(err);
