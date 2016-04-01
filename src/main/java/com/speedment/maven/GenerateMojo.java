@@ -49,7 +49,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
         
         if (hasConfigFile()) {
             try {
-                final Project p = DocumentTranscoder.load(configFile.toPath());
+                final Project p = DocumentTranscoder.load(configFile.toPath());                  
                 speedment.getCodeGenerationComponent().getTranslatorManager().accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing configFile file.";
