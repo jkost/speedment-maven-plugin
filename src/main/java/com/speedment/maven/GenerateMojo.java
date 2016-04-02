@@ -45,7 +45,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
-        getLog().info("Creating from JSON file: '" + configFile.getAbsolutePath() + "'.");
+        getLog().info("Generating code using JSON configuration file: '" + configFile.getAbsolutePath() + "'.");
         
         if (hasConfigFile()) {
             try {
