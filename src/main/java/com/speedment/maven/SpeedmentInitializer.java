@@ -18,10 +18,11 @@ package com.speedment.maven;
 
 import com.speedment.Speedment;
 import com.speedment.component.Component;
-import com.speedment.component.ComponentBuilder;
-import com.speedment.internal.core.platform.SpeedmentFactory;
+import com.speedment.internal.core.runtime.DefaultSpeedmentApplicationLifecycle;
+import java.io.File;
 import java.util.function.Supplier;
 import org.apache.maven.plugin.logging.Log;
+import com.speedment.component.ComponentConstructor;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -31,38 +32,31 @@ import static java.util.Objects.requireNonNull;
 final class SpeedmentInitializer {
     
     private final Log log;
-    private final Supplier<ComponentBuilder<?>[]> componentBuilders;
+    private final File configFile;
+    private final Supplier<ComponentConstructor<? extends Component>[]> componentBuilders;
     
-    public SpeedmentInitializer(Log log, Supplier<ComponentBuilder<?>[]> componentBuilders) {
+    public SpeedmentInitializer(Log log, File configFile, Supplier<ComponentConstructor<?>[]> componentBuilders) {
         this.log               = requireNonNull(log);
+        this.configFile        = configFile; // Can be null.
         this.componentBuilders = requireNonNull(componentBuilders);
     }
     
     public Speedment build() {
-        final Speedment speedment = SpeedmentFactory.newSpeedmentInstance();
-        final ComponentBuilder<?>[] builders = componentBuilders.get();
+        final DefaultSpeedmentApplicationLifecycle lifecycle = new DefaultSpeedmentApplicationLifecycle(configFile);
+        final ComponentConstructor<? extends Component>[] constructors = componentBuilders.get();
         
-        if (builders != null) {
-            for (final ComponentBuilder<?> builder : builders) {
-                if (builder != null) {
-                    buildAndPutComponent(speedment, builder);
+        if (constructors != null) {
+            for (final ComponentConstructor<? extends Component> constructor : constructors) {
+                if (constructor != null) {
+                    lifecycle.with(constructor);
                 } else {
-                    log.warn("Specified ComponentBuilder is null.");
+                    log.warn("Specified ComponentConstructor is null.");
                 }
             }
         } else {
-            log.info("Component container is not defined.");
+            log.info("Component constructors container is not defined.");
         }
-        
-        speedment.components().forEach(Component::resolve);
-        speedment.components().forEach(Component::start);
 
-        return speedment;
-    }
-        
-    private <C extends Component> void buildAndPutComponent(Speedment speedment, ComponentBuilder<C> builder) {
-        final C comp = builder.withSpeedment(speedment).build();
-        log.info("Loading component '" + comp.getComponentClass().getSimpleName() + "'.");
-        speedment.put(comp.initialize());
+        return lifecycle.build();
     }
 }

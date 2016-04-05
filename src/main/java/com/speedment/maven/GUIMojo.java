@@ -18,15 +18,15 @@ package com.speedment.maven;
 
 
 import com.speedment.Speedment;
-import com.speedment.component.ComponentBuilder;
 import com.speedment.internal.ui.MainApp;
-import static com.speedment.internal.ui.UISession.DEFAULT_GROOVY_LOCATION;
 import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
+import com.speedment.component.ComponentConstructor;
 import static javafx.application.Application.launch;
 
 /**
@@ -37,30 +37,30 @@ import static javafx.application.Application.launch;
 public final class GUIMojo extends AbstractSpeedmentMojo {
     
     @Parameter
-    private ComponentBuilder<?>[] components;
+    private ComponentConstructor<?>[] components;
     
-    @Parameter(defaultValue = DEFAULT_GROOVY_LOCATION)
-    private File groovyFile;
+    @Parameter(defaultValue = DEFAULT_CONFIG_LOCATION)
+    private File configFile;
 
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
         MainApp.setSpeedment(speedment);
         
-        if (hasGroovyFile()) {
-            launch(MainApp.class, groovyFile.getAbsolutePath());
+        if (hasConfigFile()) {
+            launch(MainApp.class, configFile.getAbsolutePath());
         } else {
             launch(MainApp.class);
         }
     }
 
     @Override
-    protected ComponentBuilder<?>[] components() {
+    protected ComponentConstructor<?>[] components() {
         return components;
     }
     
     @Override
-    protected File groovyLocation() {
-        return groovyFile;
+    protected File configLocation() {
+        return configFile;
     }
 
     @Override

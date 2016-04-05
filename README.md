@@ -11,7 +11,7 @@ This small plugin makes it possible to run Speedment as a Maven goal in your IDE
 </plugin>
 ```
 
-This will add two new goals, one that launches the Speedment GUI and one that generates code from a ```.groovy```-file.
+This will add two new goals, one that launches the Speedment GUI and one that generates code from a ```.json```-file.
 
 ![Screenshot from the IDE](http://frslnd.se/github/illustrations/speedment_maven_goals.png)
 
