@@ -48,7 +48,7 @@ abstract class AbstractSpeedmentMojo extends AbstractMojo {
     
     protected final boolean hasConfigFile() {
         if (configLocation() == null) {
-            final String err = "Specified .json-file is null.";
+            final String err = "The specified .json-file is null.";
             getLog().error(err);
             return false;
         } else if (!configLocation().exists()) {

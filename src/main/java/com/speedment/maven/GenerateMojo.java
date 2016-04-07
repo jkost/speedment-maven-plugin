@@ -29,7 +29,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 import static com.speedment.internal.ui.UISession.DEFAULT_CONFIG_LOCATION;
 import com.speedment.component.ComponentConstructor;
 
-
 /**
  *
  * @author Emil Forslund
@@ -46,10 +45,10 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     @Override
     public void execute(Speedment speedment) throws MojoExecutionException, MojoFailureException {
         getLog().info("Generating code using JSON configuration file: '" + configFile.getAbsolutePath() + "'.");
-        
+
         if (hasConfigFile()) {
             try {
-                final Project p = DocumentTranscoder.load(configFile.toPath());                  
+                final Project p = DocumentTranscoder.load(configFile.toPath());
                 speedment.getCodeGenerationComponent().getTranslatorManager().accept(p);
             } catch (SpeedmentException ex) {
                 final String err = "Error parsing configFile file.";
@@ -67,7 +66,7 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
     protected ComponentConstructor<?>[] components() {
         return components;
     }
-    
+
     @Override
     protected File configLocation() {
         return configFile;
@@ -75,6 +74,6 @@ public final class GenerateMojo extends AbstractSpeedmentMojo {
 
     @Override
     protected String launchMessage() {
-        return "Starting Speedment";
+        return "Starting speedment:generate";
     }
 }
