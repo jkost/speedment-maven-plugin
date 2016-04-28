@@ -65,6 +65,6 @@ public final class GUIMojo extends AbstractSpeedmentMojo {
 
     @Override
     protected String launchMessage() {
-        return "Running Speedment GUI";
+        return "Running speedment:gui";
     }
 }
